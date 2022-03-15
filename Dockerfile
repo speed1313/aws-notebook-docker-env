@@ -10,6 +10,10 @@ RUN apt-get install -y build-essential poppler-utils apt-utils texlive-latex-bas
                        sudo unzip wget nano poppler-utils cmake git libssl-dev zlib1g-dev libncurses5-dev libgdbm-dev \
                        libnss3-dev libssl-dev libreadline-dev libffi-dev curl libsqlite3-dev curl unzip
 
+ENV BRAKET_DIR=/home/braket
+WORKDIR $BRAKET_DIR
+
+
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && \
     sudo ./aws/install && /usr/local/bin/aws --version
 
@@ -28,4 +32,4 @@ RUN pip3 install --no-cache-dir \
 
 
 # RUN JUPYTER ON PORT 8889
-CMD [ "jupyter" , "notebook",  "--ip=0.0.0.0", "--port=8889", "--notebook-dir=./aws-braket-jupyter", "--no-browser" ]
+CMD [ "jupyter" , "notebook",  "--ip=0.0.0.0", "--port=8889", "--notebook-dir=./aws-braket-jupyter", "--no-browser","--allow-root" ]

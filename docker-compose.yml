@@ -1,0 +1,17 @@
+services:
+  amazon-braket:
+    image: aws-braket-notebook
+    container_name: aws-braket-notebook
+    build:
+      context: ./
+      dockerfile: ./Dockerfile # production environment
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - ./example:/home/braket/aws-braket-jupyter
+    ports:
+      - 8888:8889
+    restart: unless-stopped
