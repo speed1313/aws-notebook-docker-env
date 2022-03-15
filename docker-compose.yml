@@ -2,6 +2,7 @@ services:
   amazon-braket:
     image: aws-braket-notebook
     container_name: aws-braket-notebook
+    working_dir: /home/braket/aws-braket-jupyter
     build:
       context: ./
       dockerfile: ./Dockerfile # production environment
@@ -12,6 +13,7 @@ services:
       - JUPYTER_ENABLE_LAB=yes
     volumes:
       - ./example:/home/braket/aws-braket-jupyter
+      - $HOME/.aws/:/root/.aws/
     ports:
       - 8888:8889
     restart: unless-stopped
