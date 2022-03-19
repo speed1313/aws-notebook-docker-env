@@ -11,9 +11,13 @@ services:
       - PGID=1000
       - TZ=Asia/Tokyo
       - JUPYTER_ENABLE_LAB=yes
+      - AWS_PROFILE=sample # profile name
+      - BOTO_CONFIG= /home/braket/.aws # location of config file
+      - AWS_SHARED_CREDENTIALS_FILE=/home/braket/.aws/credentials # location of credentials file
+      - AWS_DEFAULT_REGION=us-east-1 # region name
     volumes:
       - ./example:/home/braket/aws-braket-jupyter
-      - $HOME/.aws/:/root/.aws/
+      - $HOME/.aws/:/home/braket/.aws/:ro
     ports:
       - 8888:8889
     restart: unless-stopped

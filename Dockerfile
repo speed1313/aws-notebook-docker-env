@@ -7,11 +7,10 @@ RUN apt-get update && apt-get install -y
 RUN python3 -m pip install --upgrade pip
 
 RUN apt-get install -y build-essential poppler-utils apt-utils texlive-latex-base texlive-latex-extra libopenblas-dev \
-                       sudo unzip wget nano poppler-utils cmake git libssl-dev zlib1g-dev libncurses5-dev libgdbm-dev \
-                       libnss3-dev libssl-dev libreadline-dev libffi-dev curl libsqlite3-dev curl unzip
+    sudo unzip wget nano poppler-utils cmake git libssl-dev zlib1g-dev libncurses5-dev libgdbm-dev \
+    libnss3-dev libssl-dev libreadline-dev libffi-dev curl libsqlite3-dev curl unzip
 
-ENV BRAKET_DIR=/home/braket
-WORKDIR $BRAKET_DIR
+
 
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && \
@@ -29,9 +28,10 @@ RUN pip3 install --no-cache-dir \
     scikit-learn \
     seaborn
 
-
+ENV BRAKET_DIR=/home/braket
+WORKDIR $BRAKET_DIR
 
 # RUN JUPYTER ON PORT 8889
-CMD [ "jupyter" , "notebook",  "--ip=0.0.0.0", "--port=8889", "--notebook-dir=./aws-braket-jupyter", "--no-browser","--allow-root" ]
+CMD [ "jupyter" , "notebook",  "--ip=0.0.0.0", "--port=8889", "--notebook-dir=./", "--no-browser","--allow-root" ]
 
 # jupyter notebook --ip=0.0.0.0 --port=8889 --notebook-dir=./ --no-browser --allow-root
