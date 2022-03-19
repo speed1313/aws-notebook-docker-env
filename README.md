@@ -13,7 +13,31 @@ Docker image to run the AWS Braket on Jupyter from local.
 
 ## How to use
 1. [aws-mfaの使い方](https://qiita.com/ogady/items/c17ffe8f7c8e15b15f77)を参考に/.aws/credentialsに[sample]というプロファイルに認証情報を書き込む.
-[sample]の内容は以下の通り
+
+```
+# ローカルでaws-mfaを取得
+$ pip3 install aws-mfa
+# インストールされてるか確認
+$ aws-mfa -h
+# 発行したアクセスキーでaws cliの設定を行う
+$ aws configure --profile sample-long-term
+$ aws configure --profile sample
+$ aws-mfa --profile sample --device arn:aws:iam::123456788990:mfa/IAMユーザー名
+# プロファイルが生成されているか確認
+$ cat ~/.aws/credentials
+
+# --device arn:aws:iam::123456788990:mfa/IAMユーザー名 の指定が面倒なら以下のように追記
+$vim ~/.aws/credentials
+[sample-long-term]
+aws_access_key_id = XXXXXXXXXXXXXXXXXXXX
+aws_secret_access_key = XXXXXXXXXXXXXXXXXXXX
+aws_mfa_device = arn:aws:iam::123456788990:mfa/IAMユーザー名 # ←追記
+# するとdevice情報を省略できる.
+$  aws-mfa --profile sample
+
+```
+最終的な
+~/.aws/credentialsの[sample]の内容は以下の通りになっているはず.
 ``` ~/.aws/credentials
 ...
 ...
@@ -24,7 +48,7 @@ aws_secret_access_key = ****
 aws_session_token = ****
 expiration = 2022-03-15 19:16:28
 ```
-~/.aws/configも以下のように付け加える.
+また, ~/.aws/configも以下のように付け加えておく.
 ```~/.aws/config
 ...
 [sample]
@@ -32,8 +56,10 @@ region = us-east-1
 output = json
 ```
 
-- 認証期限が切れたら, 再びaws-mfaコマンドで認証情報を設定し直す.
-1. このリポジトリをクローン
+- なお, 認証期限が切れたら, 再び```$  aws-mfa --profile sample```で認証情報を設定し直す.
+
+
+2. このリポジトリをクローン
 ```
 git clone https://github.com/speed1313/aws-notebook-docker-env
 ```
