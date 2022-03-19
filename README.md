@@ -32,7 +32,8 @@ region = us-east-1
 output = json
 ```
 
-2. このリポジトリをクローン
+- 認証期限が切れたら, 再びaws-mfaコマンドで認証情報を設定し直す.
+1. このリポジトリをクローン
 ```
 git clone https://github.com/speed1313/aws-notebook-docker-env
 ```
